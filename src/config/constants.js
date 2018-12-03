@@ -1,0 +1,6 @@
+export const APPOINTMENT_STATUS = {
+  WAITING: 0,
+  SERVING: 1,
+  DONE: 2,
+  CANCEL: 3
+}

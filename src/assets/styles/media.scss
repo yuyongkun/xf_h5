@@ -1,0 +1,22 @@
+.media, .media-body {
+  overflow: hidden;
+  zoom: 1;
+  box-sizing: border-box;
+
+  &:first-child {
+    margin-top: 0;
+  }
+}
+.media-body, .media-left, .media-right {
+  display: table-cell;
+  vertical-align: top;
+}
+.media-left, .media>.pull-left {
+  padding-right: 10px;
+}
+.media-body {
+  width: 10000px;
+}
+.media-object {
+  display: block;
+}

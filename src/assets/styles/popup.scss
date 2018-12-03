@@ -1,0 +1,14 @@
+.popup-modal {
+  position: fixed;
+  z-index: 999;
+  top: 0;
+  left: 0;
+  background: rgba($color: #000000, $alpha: 0.5);
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  transition: .2s ease-out;
+}
+.popup-content {
+  
+}

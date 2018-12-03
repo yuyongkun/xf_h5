@@ -1,0 +1,13 @@
+$main: #353535;
+$sub: #888888;
+$success: #09BB07;
+.vux-price{
+  color:#ff5000;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 0;
+  .decimal--small{
+    display: inline;
+    font-size: 62%;
+  }
+}
