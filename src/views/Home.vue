@@ -95,10 +95,11 @@
 </template>
 
 <script>
-import Cookies from 'js-cookie'
+// import Cookies from 'js-cookie'
 import { Toast } from 'mint-ui'
 import { listShop, getUserInfo2 } from '../api/api'
-import { getQueryValueByName, getLocation } from '../utils'
+// import { getQueryValueByName, getLocation } from '../utils'
+import { getQueryValueByName } from '../utils'
 
 export default {
   name: 'Home',
@@ -114,7 +115,7 @@ export default {
 
   watch: {
     selected: function (val, oldVal) {
-      localStorage.setItem('fx:selectedTab', val)
+      // localStorage.setItem('fx:selectedTab', val)
     }
   },
 
@@ -175,45 +176,58 @@ export default {
   },
 
   mounted () {
-    let selectedTab = localStorage.getItem('fx:selectedTab') || 'home'
-    if (window._target_view === 'user') {
-      window._target_view = null // use only once
+    // let selectedTab = localStorage.getItem('fx:selectedTab') || 'home'
+    // if (window._target_view === 'user') {
+      // window._target_view = null // use only once
+      // selectedTab = 'me'
+    // }
+    // let targetView = Cookies.get('TARGET_VIEW')
+    // console.log(targetView)
+    // if (targetView) {
+      // selectedTab = targetView
+      // Cookies.set('TARGET_VIEW', '')
+    // }
+    let state = getQueryValueByName('state')
+    let selectedTab = 'home'
+    if (state === 'shop-home-user') {
       selectedTab = 'me'
     }
-
-    let targetView = Cookies.get('TARGET_VIEW')
-    console.log(targetView)
-    if (targetView) {
-      selectedTab = targetView
-      Cookies.set('TARGET_VIEW', '')
-    }
-
+    Toast(selectedTab)
     this.$indicator.open({
       text: '让发型更出色，让生活更精彩',
       spinnerType: 'fading-circle'
     })
 
-    getLocation().then(res => {
-      let latitude = res.latitude      // 纬度，浮点数，范围为90 ~ -90
-      let longitude = res.longitude    // 经度，浮点数，范围为180 ~ -180。
+    // getLocation().then(res => {
+      // let latitude = res.latitude      // 纬度，浮点数，范围为90 ~ -90
+      // let longitude = res.longitude    // 经度，浮点数，范围为180 ~ -180。
       // let speed = res.speed         // 速度，以米/每秒计
       // let accuracy = res.accuracy   // 位置精度
-      this.listShop({ latitude, longitude })
-    }).catch(e => {
-      console.error(e)
-      listShop({})
-    })
+     // this.listShop({ latitude, longitude })
+    // }).catch(e => {
+      // console.error(e)
+      // listShop({})
+    // })
 
     /* eslint-disable */
     let msg = '获取用户信息失败失败'
-    getUserInfo2().then(data => {
-      let user = data.data.user
-      this.user = user
-    }).catch(e => {
-      console.error(e)
-      Toast(msg)
-    })
-
+    let self=this;
+    function getUserInfo3(){
+      var code = getQueryValueByName('code')
+      if(!!code){
+        console.log('hascode->' + location.href);
+        getUserInfo2(code,function(result){
+          let user = result.data.user.result2;
+          self.user = user
+        })
+      }else{
+          console.log('nocode->' + location.href);
+          // var redirect_uri='https://yyktest.natapp4.cc/index.html';
+          var redirect_uri=encodeURIComponent(location.href);
+          location.href=`https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxc7ced805a8754132&redirect_uri=${redirect_uri}&response_type=code&scope=snsapi_userinfo&state=shop-home-user#wechat_redirect`;
+      }
+    }
+    getUserInfo3();
     this.selected = selectedTab
   }
 }

@@ -1,7 +1,8 @@
 import axios from 'axios'
 
 // const base = process.env.NODE_ENV === 'development' ? '/api/wx' : '/shop-home/api/wx'
-const base = '/shop-home/api/wx'
+// const base = '/shop-home/api/wx'
+const base = '/api/wx'
 
 export const listShop = (params) => {
   return axios({
@@ -23,7 +24,8 @@ export const listProductGroup = (shopId, cateId) => { return axios.get(`${base}/
 
 export const getProduct = (prodId) => { return axios.get(`${base}/products/${prodId}`).then(resp => resp.data) }
 
-export const getUserInfo = () => { return axios.get(`${base}/user-info`).then(resp => resp.data) }
+// export const getUserInfo = () => { return axios.get(`${base}/user-info`).then(resp => resp.data) }
+export const getUserInfo2 = (code, cb) => { return axios.get(`${base}/user-info2?code=${code}`).then(resp => cb(resp.data)) }
 
 export const getCouponsByOrder = ({product, openid, shopId}) => {
   return axios({
